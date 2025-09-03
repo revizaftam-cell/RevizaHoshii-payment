@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVIZAHOSHII STORE</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        /* Fullscreen container */
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Background video */
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Header */
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Content */
+        .content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Payment Buttons */
+        .payment-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            margin: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #ff6f61;
+            transition: background-color 0.3s ease;
+        }
+
+        .payment-button:hover {
+            background-color: #ff4b3a;
+        }
+
+        .dana-button {
+            background-color: #2e86c1;
+        }
+
+        .dana-button:hover {
+            background-color: #1a65a3;
+        }
+
+        .qris-button {
+            background-color: #4caf50;
+        }
+
+        .qris-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Watermark */
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: white;
+            opacity: 0.5;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Modal for rekening info */
+        #rekeningModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 2;
+            transition: opacity 0.3s ease;
+        }
+
+        #rekeningModal div {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        #rekeningModal button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #ff6f61;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .content h2 {
+                font-size: 1.8rem;
+            }
+
+            .payment-button {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Background video -->
+        <div class="background-video">
+            <video id="bg-video" autoplay loop playsinline muted>
+                <source src="https://files.catbox.moe/ht4t9w.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>REVIZAHOSHII STORE</h1>
+        </div>
+
+        <!-- Main content -->
+        <div class="content">
+            <h2>Silakan Lakukan Pembayaran</h2>
+            <p>Jangan lupa SS bukti transfernya</p>
+            
+            <!-- Button for Dana -->
+            <a href="dana://08978595858" class="payment-button dana-button" target="_blank" onclick="showRekeningInfo(event)">
+                Bayar Via Dana
+            </a>
+
+            <!-- Button for QRIS -->
+            <a href="https://files.catbox.moe/qy3br8.png" class="payment-button qris-button" target="_blank">
+                Bayar Via QRIS
+            </a>
+            
+            <!-- Contact Info -->
+            <p>Jika ingin membuat webmu sendiri, hubungi revizahoshii</p>
+        </div>
+
+        <!-- Watermark -->
+        <div class="watermark">
+            <p>Creator by revizahoshii</p>
+        </div>
+    </div>
+
+    <!-- Modal for rekening info -->
+    <div id="rekeningModal">
+        <div>
+            <h2>Informasi Rekening Dana</h2>
+            <p><strong>DANA</strong><br>08978595858 A/N MUHAMMAD REVIZA FLORYAN</p>
+            <button onclick="closeRekeningInfo()">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to show rekening info modal
+        function showRekeningInfo(event) {
+            event.preventDefault(); // Prevent the default link action
+            document.getElementById('rekeningModal').style.display = 'flex';
+            document.getElementById('rekeningModal').style.opacity = 1;
+        }
+
+        // Function to close rekening info modal
+        function closeRekeningInfo() {
+            document.getElementById('rekeningModal').style.opacity = 0;
+            setTimeout(function() {
+                document.getElementById('rekeningModal').style.display = 'none';
+            }, 300); // Ensure it fades out before hiding
+        }
+
+        // Ensure video plays with sound after it's ready
+        const video = document.getElementById('bg-video');
+        video.oncanplay = () => {
+            video.muted = false; // Unmute video once ready to play
+            video.play(); // Ensure video plays with sound
+        };
+    </script>
+</body>
+  </html>
+  
